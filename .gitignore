@@ -1,0 +1,5 @@
+*.tar
+*.gz
+*.txt
+!pop_lat_lon.txt
+/tc
