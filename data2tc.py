@@ -186,17 +186,15 @@ def process_and_save(raw_file):
                 
                 used_in.add(tc_file_path)
                 fout = open(tc_file_path, "a")
-                #line_prefix = "{};{}".format(timestamp,pop_id)
                 for client in pop["children"]:
-                    client_id = check_client_id(pop_id, client["id"], client["lat"],client["lng"])
-                    #client_prefix = "{};{};{};{}".format(line_prefix, client_id, client["lat"],client["lng"])
+                    client_id = check_client_id(pop_id, client["name"], client["lat"],client["lng"])
                     line_prefix = "{};{};{};{};{}".format(timestamp,client["lat"],client["lng"],pop_id,client_id)
 
 
                     # Getting interface(s) data
                     interfaces_lines = []
                     for interface in client["data"]["interfaces"]: # array of interfaces
-                        interface_id = check_interface_id(pop_id, client["id"], interface[INTERFACE_DATA[0]])
+                        interface_id = check_interface_id(pop_id, client["name"], interface[INTERFACE_DATA[0]])
                         interfaces_lines.append(";"+str(interface_id))
                         for key in INTERFACE_DATA[1:]:
                             val = interface.get(key)
@@ -227,7 +225,6 @@ def process_and_save(raw_file):
 
 
                     for interface_line in interfaces_lines:
-                        #print(client_prefix+interface_line+smoke_line, file=fout)
                         print(line_prefix+interface_line+smoke_line, file=fout)
 
                 fout.close()

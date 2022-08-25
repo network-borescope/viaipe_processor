@@ -11,6 +11,52 @@ def load_pops(filename=POPS_FILE):
 def z5(s): return ("00000"+s)[-5:]
 
 
+def recover_caption(s):
+    begin = None
+    caption_count = 0
+    ignore = ["-", "|", "/"]
+    special = ["Á", "É", "Í", "Ó", "Ú", "Ç"]
+    states = [
+        "AC", "AL", "AM", "AP", "BA", "CE",
+        "DF", "ES", "GO", "MA", "MG", "MS",
+        "MT", "PA", "PB", "PE", "PI", "PR",
+        "RJ", "RN", "RO", "RR", "RS", "SC",
+        "SE", "SP", "TO"
+    ]
+
+    for i in range (len(s)):
+        c = s[i]
+        # if c in ignore:
+        #     if begin is not None:
+        #         caption_count += 1
+        #     continue
+
+        if "A" <= c <= "Z" or c in special:
+            caption_count += 1
+
+            if caption_count == 2:
+                if begin is None:
+                    begin = i-1
+
+        elif begin is None:
+            caption_count = 0
+        else:
+            break
+    
+    if begin is None:
+        return s
+
+    caption = s[begin:begin+caption_count]
+
+    if caption in states:
+        return s
+
+    if caption[-1] in ignore:
+        caption = caption[:-1]
+    
+    return caption
+
+
 if __name__ == "__main__":
     load_pops()
     
