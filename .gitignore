@@ -1,5 +1,7 @@
 *.tar
 *.gz
 *.txt
+*.json
 !pop_lat_lon.txt
 /tc
+/pycache

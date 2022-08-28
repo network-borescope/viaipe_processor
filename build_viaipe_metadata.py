@@ -104,7 +104,7 @@ if __name__ == "__main__":
                 last_client = rec[2]
 
 
-                client = '{"name": "'+rec[1]+'", "id": '+rec[2]+', "lat": '+rec[3]+', "lon": '+rec[4]+',"interfaces": ['
+                client = '{"caption": "'+recover_caption(rec[1])+'", "id": "'+rec[1]+'", "cod": '+rec[2]+', "lat": '+rec[3]+', "lon": '+rec[4]+',"interfaces": ['
                 print(client, file=fout)
 
 
